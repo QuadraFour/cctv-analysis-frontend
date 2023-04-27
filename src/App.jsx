@@ -12,17 +12,19 @@ import {
 } from "react-router-dom";
 function App() {
   const [data, setData] = useState([]);
+  const [loader, setLoader] = useState(false);
   useEffect(() => {
+    setLoader(true);
     axios
       .get("https://cctv-analysis.onrender.com/api/v1/incidents/")
       .then((res) => {
         setData(res.data.data.data);
+        setLoader(false);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
-
   return (
     <div>
       <BrowserRouter>
