@@ -1,11 +1,15 @@
 import Navbar from "./components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import React from "react";
 import Home from "./components/Home/Home";
-import LoginForm from "./components/Login/LoginForm";
-import SignupForm from "./components/Signup/SignupForm";
-import Spinner from "./components/Spinner/Spinner";
+import LoginForm from "./Pages/Login/LoginForm";
+import SignupForm from "./Pages/Register/SignupForm";
+import {
+  BrowserRouter as Router,
+  Route,
+  BrowserRouter,
+  Routes,
+} from "react-router-dom";
 function App() {
   const [data, setData] = useState([]);
   const [loader, setLoader] = useState(false);
@@ -22,11 +26,15 @@ function App() {
       });
   }, []);
   return (
-    <>
-      {loader ? <Spinner /> : null}
-      <Navbar />
-      <Home data={data} />
-    </>
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login"  element={<LoginForm/>} />
+          <Route path="/register"  element={<SignupForm/>} />
+          <Route path="/home"  element={<Home data={data} />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 

@@ -2,19 +2,19 @@ import "./Signup.css";
 import React from "react";
 import { useState } from "react";
 function SignupForm() {
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-
+  const [role, setRole] = useState("");
   const registerUser = async (e) => {
     e.preventDefault();
-    const res = fetch("https://localhost:8000/api/register", {
+    const res = fetch("http://localhost:8000/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        username,
+        name,
         password,
         email,
       }),
@@ -31,6 +31,7 @@ function SignupForm() {
           id="username"
           name="username"
           placeholder="Your username.."
+          onChange={(e) => setName(e.target.value)}
         />
         <label htmlFor="password">Password</label>
         <input
@@ -38,6 +39,7 @@ function SignupForm() {
           id="password"
           name="password"
           placeholder="Your password.."
+          onChange={(e) => setPassword(e.target.value)}
         />
         <label htmlFor="email">Email</label>
         <input
@@ -45,7 +47,14 @@ function SignupForm() {
           id="email"
           name="email"
           placeholder="Your email.."
+          onChange={(e) => setEmail(e.target.value)}
         />
+
+        <label htmlFor="role">Role</label>
+        <select id="role" name="role" onChange={(e) => setRole(e.target.value)}>
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+        </select>
         <button type="submit">Submit</button>
       </form>
     </div>

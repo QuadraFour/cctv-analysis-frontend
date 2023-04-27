@@ -2,7 +2,27 @@
 import "./Home.css";
 import React from "react";
 function Home({ data }) {
+  const navigate = useNavigate();
   const incident = data;
+  // useEffect(() => {
+  //   const token=localStorage.getItem('token');
+  //   if(token){
+  //     const user=decodeToken(token);
+  //     if(!user){
+  //       navigate('/login');
+  //     }
+  //     else{
+  //       if(user.role!=='admin'){
+  //         alert("You are not authorized to view this page");
+  //         navigate('/login');
+  //       }
+  //     }
+  //   }
+
+  // }, []);
+
+
+
   function formatDate(date) {
     let formattedDate = new Date(date);
     if (date == "") return "";
@@ -29,7 +49,7 @@ function Home({ data }) {
       <td>
         <a
           href={`https://www.google.com/maps/place/${el.location.coordinates[1]},${el.location.coordinates[0]}`}
-          target="_blank"
+          target="_blank" rel="noreferrer"
         >
           {el.locality}
         </a>
