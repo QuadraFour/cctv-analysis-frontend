@@ -1,8 +1,30 @@
 /* eslint-disable react/prop-types */
 import "./Home.css";
-
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {decodeToken} from "react-jwt";
 function Home({ data }) {
+  const navigate = useNavigate();
   const incident = data;
+  // useEffect(() => {
+  //   const token=localStorage.getItem('token');
+  //   if(token){
+  //     const user=decodeToken(token);
+  //     if(!user){
+  //       navigate('/login');
+  //     }
+  //     else{
+  //       if(user.role!=='admin'){
+  //         alert("You are not authorized to view this page");
+  //         navigate('/login');
+  //       }
+  //     }
+  //   }
+
+  // }, []);
+
+
+
   function formatDate(date) {
     let formattedDate = new Date(date);
     if (date == "") return "";

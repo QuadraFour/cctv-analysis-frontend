@@ -1,9 +1,15 @@
-import Navbar from "./components/Navbar/Navbar"
+import Navbar from "./components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Home from "./components/Home/Home"
-import LoginForm from "./components/Login/LoginForm";
-import SignupForm from "./components/Signup/SignupForm";
+import Home from "./components/Home/Home";
+import LoginForm from "./Pages/Login/LoginForm";
+import SignupForm from "./Pages/Register/SignupForm";
+import {
+  BrowserRouter as Router,
+  Route,
+  BrowserRouter,
+  Routes,
+} from "react-router-dom";
 function App() {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -19,10 +25,15 @@ function App() {
 
   return (
     <div>
-      <Navbar/>
-      <Home data={data}/>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login"  element={<LoginForm/>} />
+          <Route path="/register"  element={<SignupForm/>} />
+          <Route path="/home"  element={<Home data={data} />} />
+        </Routes>
+      </BrowserRouter>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
