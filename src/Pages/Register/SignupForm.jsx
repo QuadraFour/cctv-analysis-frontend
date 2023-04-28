@@ -1,14 +1,16 @@
 import "./Signup.css";
 import React from "react";
 import { useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 function SignupForm() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
+  const navigate = useNavigate();
   const registerUser = async (e) => {
     e.preventDefault();
-    const res = fetch("http://localhost:8000/register", {
+    const res = await fetch("http://localhost:8000/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -17,13 +19,20 @@ function SignupForm() {
         name,
         password,
         email,
+        role,
       }),
     });
+
     const data = await res.json();
-    console.log(data);
+    if (data.status === "success") {
+      alert("User registered successfully");
+      navigate("/login");
+    } else {
+      alert("User registration failed");
+    }
   };
   return (
-    <div>
+    <>
       <form onSubmit={registerUser}>
         <label htmlFor="name">Username</label>
         <input
@@ -50,14 +59,29 @@ function SignupForm() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <label htmlFor="role">Role</label>
-        <select id="role" name="role" onChange={(e) => setRole(e.target.value)}>
-          <option value="user">User</option>
-          <option value="admin">Admin</option>
-        </select>
+        <label htmlFor="role">User</label>
+        <input
+          type="radio"
+          name="role"
+          value="user"
+          checked={role === "user"}
+          onChange={(e) => {
+            setRole(e.target.value);
+          }}
+        />
+        <label htmlFor="role">Admin</label>
+        <input
+          type="radio"
+          name="role"
+          value="admin"
+          checked={role === "admin"}
+          onChange={(e) => {
+            setRole(e.target.value);
+          }}
+        />
         <button type="submit">Submit</button>
       </form>
-    </div>
+    </>
   );
 }
 
