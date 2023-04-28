@@ -1,9 +1,9 @@
 table{
-    width: 100%;
     border-collapse: collapse;
     border: 1px solid #000;
     margin: 0 auto;
     margin-top: 20px;
+    overflow-x: scroll;
 }
 table tr th{
     border: 1px solid #000;
@@ -21,4 +21,16 @@ table tr td{
     background:#FFF9DE;
     padding: 20px;
     margin-top: 20px;
+}
+
+@media screen and (max-width: 900px) {
+    .home{
+        padding: 10px;
+    }
+    table tr th{
+        font-size: 12px;
+    }
+    table tr td{
+        font-size: 12px;
+    }
 }

@@ -1,7 +1,6 @@
-import Navbar from "./components/Navbar/Navbar";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Home from "./components/Home/Home";
+import Home from "./Pages/Home/Home";
 import LoginForm from "./Pages/Login/LoginForm";
 import SignupForm from "./Pages/Register/SignupForm";
 import {
