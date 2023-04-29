@@ -19,10 +19,15 @@ table tr td{
 }
 .home{
     background:#FFF9DE;
-    padding: 20px;
-    margin-top: 20px;
 }
-
+.welcome{
+    width:31%;
+    text-align: right;
+}
+.welcome h1{
+    margin-top: 20px;
+    font-weight: 400;
+}
 @media screen and (max-width: 900px) {
     .home{
         padding: 10px;

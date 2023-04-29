@@ -21,13 +21,13 @@ function LoginForm() {
         password,
       }),
     });
-    setEmail("");
-    setPassword("");
-    setShow(false);
     const data = await res.json();
     console.log(data);
 
     if (data.user) {
+      setEmail("");
+      setPassword("");
+      setShow(false);
       localStorage.setItem("token", data.user);
       const user = decodeToken(data.user);
       if (user.role === "admin") {
@@ -39,15 +39,14 @@ function LoginForm() {
     }
     if (data.status === "fail") {
       alert("Invalid credentials");
+      setPassword("");
       return;
     }
   };
 
-  const showPassword=()=>{
+  const showPassword = () => {
     setShow(!show);
-
-  }
-
+  };
 
   return (
     <div className="login">
@@ -72,8 +71,11 @@ function LoginForm() {
               name="password"
               placeholder="Your password.."
               onChange={(e) => setPassword(e.target.value)}
-            ></input>{" "}
-            <i className={show ? "fa-solid fa-eye" : "fa-solid fa-eye-slash" } onClick={showPassword}></i>
+            ></input>
+            <i
+              className={show ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"}
+              onClick={showPassword}
+            ></i>
           </div>
           <button type="submit" value="Submit">
             Submit

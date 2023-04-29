@@ -1,14 +1,17 @@
 /* eslint-disable react/prop-types */
 import "./Home.css";
 import React from "react";
-import Navbar from "../../Components/Navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { decodeToken } from "react-jwt";
-function Home({ data }) {
+import Spinner from "../../components/Spinner/Spinner";
+function Home() {
   const navigate = useNavigate();
-  const incident = data;
   const [token, setToken] = useState("");
+  const [data,setData]=useState([]);
+  const [loader, setLoader] = useState(false);
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -23,6 +26,20 @@ function Home({ data }) {
       }
     }
   }, []);
+  
+  useEffect(() => {
+    setLoader(true);
+    axios
+      .get("https://cctv-analysis.onrender.com/api/v1/incidents/")
+      .then((res) => {
+        setData(res.data.data.data);
+        setLoader(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
 
   function formatDate(date) {
     let formattedDate = new Date(date);
@@ -42,7 +59,7 @@ function Home({ data }) {
       formattedDate.getSeconds().toString().padStart(2, "0")
     );
   }
-  const rows = incident.map((el) => (
+  const rows = data.map((el) => (
     <tr key={el._id}>
       <td>{el._id}</td>
       <td style={{ textTransform: "uppercase" }}>{el.type}</td>
@@ -62,24 +79,23 @@ function Home({ data }) {
     </tr>
   ));
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
-  };
+  
 
   return (
     <div className="home">
+      {loader ? (
+        <Spinner />
+      ) : (
+        <></>
+      )}
       {token ? (
         <div>
-          {/* <Navbar /> */}
-          <center>
+          <Navbar/>
+          <center className="welcome">
             <h1>Welcome {decodeToken(token).name}</h1>
           </center>
-          <button className="logout" onClick={handleLogout}>
-            Logout
-          </button>
-          <center>
-            <h1 style={{ marginTop: "100px" }}>Incident Data</h1>
+          <center style={{marginTop:"50px"}}>
+            <h1>Incident Data</h1>
           </center>
           <table>
             <thead>
