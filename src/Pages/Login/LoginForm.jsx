@@ -11,7 +11,7 @@ function LoginForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:8000/login", {
+    const res = await fetch("http://localhost:8000/api/v1/users/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,17 +21,21 @@ function LoginForm() {
         password,
       }),
     });
-    const data = await res.json();
-    console.log(data);
 
+    const data = await res.json();
     if (data.user) {
       setEmail("");
       setPassword("");
       setShow(false);
       localStorage.setItem("token", data.user);
       const user = decodeToken(data.user);
+
       if (user.role === "admin") {
-        navigate("/home");
+        const name=user.name;
+        navigate("/admin/"+name);
+      } else if (user.role === "user") {
+        const name=user.name;
+        navigate("/user/"+name);
       } else {
         alert("You are not authorized to view this page");
         navigate("/login");

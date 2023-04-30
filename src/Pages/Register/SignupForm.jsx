@@ -12,7 +12,7 @@ function SignupForm() {
   const navigate = useNavigate();
   const registerUser = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:8000/signup", {
+    const res = await fetch("http://localhost:8000/api/v1/users/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,12 +24,13 @@ function SignupForm() {
         role,
       }),
     });
+   
+    const data = await res.json();
     setName("");
     setPassword("");
     setEmail("");
     setRole("");
     setShow(false);
-    const data = await res.json();
     if (data.status === "success") {
       alert("User registered successfully");
       navigate("/login");
@@ -41,7 +42,7 @@ function SignupForm() {
   const showPassword = () => {
     setShow(!show);
   };
-  
+
   return (
     <div className="signup">
       <div className="left">

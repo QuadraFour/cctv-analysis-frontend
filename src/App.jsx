@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import Home from "./Pages/Home/Home";
+import Admin from "./Pages/Admin/Admin";
 import LoginForm from "./Pages/Login/LoginForm";
 import SignupForm from "./Pages/Register/SignupForm";
+import User from "./Pages/User/User";
+import NotFound from "./Pages/NotFound/NotFound";
 import {
   BrowserRouter as Router,
   Route,
@@ -14,9 +14,12 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
+          {/* anyother page then this give 404 error */}
           <Route path="/login"  element={<LoginForm/>} />
           <Route path="/register"  element={<SignupForm/>} />
-          <Route path="/home"  element={<Home />} />
+          <Route path="/admin/:name"  element={<Admin/>} />
+          <Route path="/user/:name"  element={<User/>} />
+          <Route path='*' element={<NotFound />}/>
         </Routes>
       </BrowserRouter>
     </div>

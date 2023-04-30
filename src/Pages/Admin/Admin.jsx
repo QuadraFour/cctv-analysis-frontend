@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { decodeToken } from "react-jwt";
 import Spinner from "../../components/Spinner/Spinner";
-function Home() {
+function Admin() {
   const navigate = useNavigate();
   const [token, setToken] = useState("");
   const [data,setData]=useState([]);
@@ -119,4 +119,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Admin;
