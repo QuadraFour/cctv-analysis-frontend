@@ -1,5 +1,5 @@
 import "./LoginForm.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { decodeToken } from "react-jwt";
 import lockIMG from "../../assets/undraw_safe_re_kiil.svg";
@@ -9,6 +9,14 @@ function LoginForm() {
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      const user = decodeToken(token);
+      navigate("/user/" + user.name);
+    }
+  }, []);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await fetch("http://localhost:8000/api/v1/users/login", {

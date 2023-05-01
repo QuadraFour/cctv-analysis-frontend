@@ -16,3 +16,6 @@ li{
     flex-direction: column;
     justify-content: space-between;
 }
+.action{
+    width:150px
+}

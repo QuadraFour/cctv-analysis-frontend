@@ -6,11 +6,17 @@ import axios from "axios";
 import Navbar from "../../components/Navbar/Navbar";
 import { decodeToken } from "react-jwt";
 import { useNavigate } from "react-router-dom";
-import "./camera.css"
+import AddCameraForm from "../../components/AddCamera/AddCameraForm";
+import DeleteCamera from "../../components/DeleteCamera/DeleteCamera";
+import "./camera.css";
+
 function ViewCameras() {
   const [loader, setLoader] = useState(false);
   const [cameras, setCameras] = useState([]);
   const [back, setBack] = useState(false);
+  const [add, setAdd] = useState(false);
+  const [deleteCamera, setDeleteCamera] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,6 +53,19 @@ function ViewCameras() {
     setBack(true);
   };
 
+  const addCamera = () => {
+    setAdd(true);
+  };
+
+  const handleFormClose = () => {
+    setAdd(false);
+    setDeleteCamera(false);
+  };
+
+  const handleDeleteCamera = () => {
+    setDeleteCamera(true);
+  };
+  
   return (
     <div>
       {loader ? (
@@ -56,20 +75,24 @@ function ViewCameras() {
           {back ? (
             <User />
           ) : (
-            <div className="camera"> 
+            <div className="camera">
+              {add ? <AddCameraForm onClose={handleFormClose}/> : <></>}
+              {deleteCamera ? <DeleteCamera onClose={handleFormClose}/> : <></>}
               <Navbar />
               <div className="wrapper">
                 <h1>Welcome {name}</h1>
+                <button onClick={addCamera} className="action">Add Camera</button>
+                <button onClick={handleDeleteCamera} className="action">Remove Camera</button>
                 <button onClick={handleBack}>Back</button>
               </div>
               <div className="cameras">
-                {cameras.map((camera,idx) => (
-                    <ul key={idx}>
-                        <li>
-                            <h3>Camera {idx+1}</h3>
-                            <h4>Camera ID: {camera.id}</h4>
-                        </li>
-                    </ul>
+                {cameras.map((camera, idx) => (
+                  <ul key={idx}>
+                    <li>
+                      <h3>Camera {idx + 1}</h3>
+                      <h4>Camera ID: {camera.id}</h4>
+                    </li>
+                  </ul>
                 ))}
               </div>
             </div>

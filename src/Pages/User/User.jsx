@@ -7,12 +7,13 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import "./User.css";
 import ViewCameras from "../Camera/ViewCameras";
+
 function User() {
   const navigate = useNavigate();
   const [incidents, setIncidents] = useState([]);
   const [loader, setLoader] = useState(false);
   const [camera, setCamera] = useState(false);
-
+  let user,id;
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
@@ -41,9 +42,15 @@ function User() {
     }
   }, []);
 
-  const decodedToken = decodeToken(localStorage.getItem("token"));
-  const user = decodedToken.name;
-  const id = decodedToken.id;
+  
+
+  if (localStorage.getItem("token") == null) {
+    navigate("/login");
+  } else {
+    const decodedToken = decodeToken(localStorage.getItem("token"));
+     user = decodedToken.name;
+     id = decodedToken.id;
+  }
 
   function formatDate(date) {
     let formattedDate = new Date(date);
